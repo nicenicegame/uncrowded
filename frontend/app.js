@@ -133,12 +133,17 @@ const addClickEvent = () => {
   })
 }
 
+// initial
+updateElement()
+updateContent()
+addClickEvent()
+
 // implement short polling
 setInterval(() => {
   updateElement()
   updateContent()
   addClickEvent()
-}, 1000)
+}, 2000)
 
 // update dummy data
 setTimeout(() => {
@@ -190,4 +195,4 @@ setTimeout(() => {
       ],
     },
   ]
-}, 5000)
+}, 3000)
