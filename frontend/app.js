@@ -111,6 +111,7 @@ const updateContent = () => {
         rooms[roomIndex].innerHTML = `${room.current}/${room.max}`
       })
 
+      // addClickEvent()
       // save data to cache
       roomCache.push(floor.rooms)
     }
@@ -128,7 +129,12 @@ const addClickEvent = () => {
         rbf.classList.remove('active')
       })
 
+      links.forEach(function (otherLink) {
+        otherLink.classList.remove('active')
+      })
+
       roomByFloor[index].classList.add('active')
+      links[index].classList.add('active')
     })
   })
 }

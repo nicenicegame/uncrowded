@@ -125,6 +125,7 @@ main {
   user-select: none;
 }
 
+.floor-nav li.active,
 .floor-nav li:hover {
   background: rgb(219, 219, 219);
 }
