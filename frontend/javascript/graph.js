@@ -59,6 +59,8 @@ let datas = [{time: "10.00", data: [{number: 1, rooms: [{roomid: 101, current: 1
             , {time: "10.10", data: [{number: 1, rooms: [{roomid: 101, current: 10, light: 1}, {roomid: 102, current: 11, light: 1}, {roomid: 103, current: 6, light: 0}]}, {number: 2, rooms: [{roomid: 201, current: 10, light: 0}, {roomid: 202, current: 5, light: 1}, {roomid: 203, current: 5, light: 0}]}]}
             , {time: "10.15", data: [{number: 1, rooms: [{roomid: 101, current: 12, light: 1}, {roomid: 102, current: 10, light: 1}, {roomid: 103, current: 5, light: 0}]}, {number: 2, rooms: [{roomid: 201, current: 10, light: 0}, {roomid: 202, current: 5, light: 1}, {roomid: 203, current: 5, light: 0}]}]}]
 
+//process data
+
 var label = []
 var people = []
 var light = []
