@@ -111,7 +111,7 @@ const updateContent = () => {
         rooms[roomIndex].innerHTML = `${room.current}/${room.max}`
       })
 
-      // addClickEvent()
+      addClickEvent()
       // save data to cache
       roomCache.push(floor.rooms)
     }
@@ -142,13 +142,11 @@ const addClickEvent = () => {
 // initial
 updateElement()
 updateContent()
-addClickEvent()
 
 // implement short polling
 setInterval(() => {
   updateElement()
   updateContent()
-  addClickEvent()
 }, 2000)
 
 // update dummy data
