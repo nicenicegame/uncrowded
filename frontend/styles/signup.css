@@ -58,6 +58,7 @@ section {
 .btn-group p {
   font-size: 14px;
   color: rgb(192, 192, 192);
+  align-self: flex-end;
 }
 
 .btn-group a {
@@ -76,11 +77,32 @@ section {
   cursor: pointer;
 }
 
+@media screen and (max-width: 1200px) {
+  .signup-form {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .signup-form {
+    width: 60%;
+  }
+}
+
 @media screen and (max-width: 768px) {
+  .signup-form {
+    width: 70%;
+  }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 620px) {
+  .signup-form {
+    width: 80%;
+  }
 }
 
-@media screen and (max-width: 1200) {
+@media screen and (max-width: 540px) {
+  .signup-form {
+    width: 90%;
+  }
 }
