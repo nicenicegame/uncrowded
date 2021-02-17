@@ -19,21 +19,58 @@
           </ul>
         </nav>
     </header>
-    <script src="/frontend/javascript/roomsetting.js"></script>
-    <div id= "currentsetting"></div>
-    <div id= "setting">
-      <form id="settingform">
-        Roomname : <input id="name"><br>
-        Capacity Limit : <input id="limit"><br>
-        Sentry mode : 
-        <select id="mode">
-          <option>OFF</option>
-          <option>ON</option>
-        </select>
-        <button onclick="gotnewsetting()" value="submit"></button>
-      </form>
+    <div class="center" id= "setup">
+      <h2>Setup</h2>
+      <div class="gRow">
+        <div class="sColumn center">
+          <b>RoomID</b>
+        </div>
+        <div class="sColumn center">
+          <div id="roomID"></div>
+        </div>
+        <div class="sColumn center">
+        </div>
+      </div>
+      <div class="gRow">
+        <div class="sColumn center">
+          <b>Name</b>
+        </div>
+        <div class="sColumn center">
+          <div id="roomName"></div>
+        </div>
+        <div class="sColumn center">
+          <div id="roomNamebtn"></div>
+        </div>
+      </div>
+      <div class="gRow">
+        <div class="sColumn center">
+          <b>Capacity</b>
+        </div>
+        <div class="sColumn center">
+          <div id="roomCapacity"></div>
+        </div>
+        <div class="sColumn center">
+          <div id="roomCapacitybtn"></div>
+        </div>
+      </div>
+      <div class="gRow">
+        <div class="sColumn center">
+          <b>Sentry</b>
+        </div>
+        <div class="sColumn center">
+          <div id="roomSentry"></div>
+        </div>
+        <div class="sColumn center">
+          <div id="roomSentrybtn"></div>
+        </div>
+      </div>
+      
+      
+      
     </div>
-    <div class= "gRow">
+      <script src="/frontend/javascript/roomsetting.js"></script>
+      <div id= "currentsetting"></div>
+      <div class= "gRow">
       <div class="gColumn">
         <div id= "Graphhead">
           </div>
@@ -44,7 +81,9 @@
           </div>
           <canvas id="Powerg" width="400" height="400"></canvas>
       </div>
+     
+      <script src="/frontend/javascript/graph.js"></script>
     </div>
-    <script src="/frontend/javascript/graph.js"></script>
-</body>
-</html>
+    
+  </body>
+  </html>
