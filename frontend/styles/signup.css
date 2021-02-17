@@ -42,10 +42,11 @@ section {
   margin-top: 5px;
   width: 100%;
   border: none;
-  border: 1px solid black;
+  border: 1.5px solid transparent;
   border-radius: 5px;
   padding: 10px;
   background: #eee;
+  outline: none;
 }
 
 .btn-group {
