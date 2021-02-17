@@ -18,6 +18,11 @@ a {
   font-weight: 600;
 }
 
+button,
+input {
+  font-family: inherit;
+}
+
 h1 {
   font-family: 'Bebas Neue', cursive;
 }

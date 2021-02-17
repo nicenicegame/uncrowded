@@ -1,2 +1,86 @@
 @import './partials/global.css';
 @import './partials/nav.css';
+
+section {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)),
+    url('../images/pexels-blue-ox-studio-2014342.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.signup-container {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+}
+
+.signup-form {
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  color: white;
+  background: rgba(39, 47, 75, 0.9);
+  width: 40%;
+}
+
+.signup-form h2 {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+.form-control input {
+  margin-top: 5px;
+  width: 100%;
+  border: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  background: #eee;
+}
+
+.btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.btn-group p {
+  font-size: 14px;
+  color: rgb(192, 192, 192);
+}
+
+.btn-group a {
+  font-size: 14px;
+  font-weight: 600;
+  color: aliceblue;
+}
+
+.submit-btn {
+  background: rgb(101, 46, 146);
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 8px 32px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+}
+
+@media screen and (max-width: 992px) {
+}
+
+@media screen and (max-width: 1200) {
+}

@@ -4,20 +4,32 @@ let data = [
     number: 1,
     rooms: [
       {
+        roomid: 101,
         max: 40,
         current: 12,
+        temp: 35,
+        light: 0,
       },
       {
+        roomid: 102,
         max: 20,
         current: 10,
+        temp: 35,
+        light: 1,
       },
       {
+        roomid: 103,
         max: 30,
         current: 28,
+        temp: 35,
+        light: 1,
       },
       {
+        roomid: 104,
         max: 30,
         current: 25,
+        temp: 35,
+        light: 0,
       },
     ],
   },
@@ -25,24 +37,39 @@ let data = [
     number: 2,
     rooms: [
       {
+        roomid: 201,
         max: 10,
         current: 1,
+        temp: 35,
+        light: 1,
       },
       {
+        roomid: 202,
         max: 20,
         current: 15,
+        temp: 32,
+        light: 0,
       },
       {
+        roomid: 203,
         max: 40,
         current: 31,
+        temp: 30,
+        light: 1,
       },
       {
+        roomid: 204,
         max: 20,
         current: 10,
+        temp: 40,
+        light: 0,
       },
       {
+        roomid: 205,
         max: 10,
         current: 9,
+        temp: 38,
+        light: 1,
       },
     ],
   },
@@ -74,21 +101,20 @@ const updateElement = () => {
     // check the fetched data changed by using cache array
     if (!floorCache.includes(floor.number)) {
       // add floor selection nav
-      const li = `<li>Floor ${floor.number}</li>`
-      floorNav.innerHTML += li
+      const li = document.createElement('li')
+      li.innerText = `Floor ${floor.number}`
+      floorNav.appendChild(li)
 
-      // add room of each floor (just container)
-      const rooms = `
-        <div class="rooms rooms${index}">
-          ${floor.rooms
-            .map((room) => {
-              return `<div class="room"></div>`
-            })
-            .join('')}
-        </div>
-        `
+      // create room for each floor
+      const rooms = document.createElement('div')
+      rooms.classList.add('rooms', `rooms${index}`)
+      floor.rooms.forEach(() => {
+        const roomElement = document.createElement('div')
+        roomElement.classList.add('room')
+        rooms.appendChild(roomElement)
+      })
 
-      floorContainer.innerHTML += rooms
+      floorContainer.appendChild(rooms)
 
       // save data to cache
       floorCache.push(floor.number)
@@ -156,20 +182,32 @@ setTimeout(() => {
       number: 1,
       rooms: [
         {
+          roomid: 101,
           max: 40,
-          current: 15,
+          current: 20,
+          temp: 34,
+          light: 1,
         },
         {
+          roomid: 102,
           max: 20,
-          current: 5,
+          current: 19,
+          temp: 36,
+          light: 1,
         },
         {
+          roomid: 103,
+          max: 30,
+          current: 10,
+          temp: 34,
+          light: 0,
+        },
+        {
+          roomid: 104,
           max: 30,
           current: 12,
-        },
-        {
-          max: 30,
-          current: 25,
+          temp: 36,
+          light: 1,
         },
       ],
     },
@@ -177,24 +215,39 @@ setTimeout(() => {
       number: 2,
       rooms: [
         {
+          roomid: 201,
           max: 10,
           current: 10,
+          temp: 34,
+          light: 0,
         },
         {
+          roomid: 202,
           max: 20,
           current: 12,
+          temp: 31,
+          light: 1,
         },
         {
+          roomid: 203,
           max: 40,
-          current: 12,
+          current: 37,
+          temp: 35,
+          light: 1,
         },
         {
+          roomid: 204,
           max: 20,
-          current: 14,
+          current: 5,
+          temp: 36,
+          light: 1,
         },
         {
+          roomid: 205,
           max: 10,
-          current: 0,
+          current: 4,
+          temp: 35,
+          light: 1,
         },
       ],
     },
