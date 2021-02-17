@@ -253,3 +253,9 @@ setTimeout(() => {
     },
   ]
 }, 3000)
+
+const signinLink = document.querySelector('.signin')
+
+// signinLink.addEventListener('click', () => {
+//   history.pushState({}, '', 'signin.html')
+// })

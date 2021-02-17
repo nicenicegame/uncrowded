@@ -30,6 +30,10 @@ main {
   background: rgb(219, 219, 219);
 }
 
+.floor-nav li.active {
+  font-weight: 600;
+}
+
 .floor-number {
   margin-bottom: 2rem;
 }

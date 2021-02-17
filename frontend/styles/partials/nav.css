@@ -15,23 +15,19 @@ header nav {
   font-size: 2rem;
 }
 
-.signup {
+.signin {
   border: 1px solid rgb(228, 228, 228);
   padding: 5px 20px;
   border-radius: 1rem;
 }
 
-.signup:hover {
+.signin:hover {
   border: 1px solid white;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
-}
-
-.nav-links li {
-  margin-left: 4vw;
 }
 
 .nav-links li a {
