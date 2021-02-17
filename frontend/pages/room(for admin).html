@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/frontend/styles/index.css" />
+    <title>Graph</title>
+</head>
+<body>
+    <header>
+        <nav class="container">
+          <h1><a href="./index.html" id="logo">Uncrowded</a></h1>
+          <ul class="nav-links">
+            <li><a href="./signin.html">Sign in</a></li>
+            <li><a href="./signup.html" class="signup">Sign up</a></li>
+          </ul>
+        </nav>
+    </header>
+    <div id= "Graphhead">
+    </div>
+    <canvas id="Peopleg" width="400" height="400"></canvas>
+    <div id= "energyhead">
+    </div>
+    <canvas id="Powerg" width="400" height="400"></canvas>
+    <script src="/frontend/javascript/graph.js"></script>
+</body>
+</html>
