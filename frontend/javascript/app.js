@@ -17,8 +17,7 @@ const fetchData = () => {
   })
     .then((response) => response.json())
     .then((responseData) => {
-      data = responseData.data[0].building
-      console.log(data)
+      data = responseData.data
     })
 }
 
@@ -130,14 +129,22 @@ const toggleActive = (e, index) => {
 }
 
 // initial
-fetchData().then(() => {
-  updateElement()
-  updateContent()
-})
+fetchData()
+  .then(() => {
+    updateElement()
+    updateContent()
+  })
+  .catch((err) => {
+    console.log(err)
+  })
 
 // implement short polling
 setInterval(() => {
-  fetchData().then(() => {
-    updateContent()
-  })
+  fetchData()
+    .then(() => {
+      updateContent()
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }, 15000)
