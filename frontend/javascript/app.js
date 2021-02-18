@@ -1,15 +1,16 @@
 let data = []
 let roomCache = []
+let links = []
+let roomByFloor = []
+const BUILDING_DATA_URL = 'https://exceed11.cpsk-club.xyz'
 // from green to red
 const colors = ['#63ff00', '#d6ff00', '	#ffff00', '#ffc100', '	#ff0000']
 const floorNumber = document.querySelector('.floor-number')
 const floorNav = document.querySelector('.floor-nav')
 const floorContainer = document.querySelector('.floor')
-let links = []
-let roomByFloor = []
 
 const fetchData = () => {
-  return fetch('https://exceed11.cpsk-club.xyz/', {
+  return fetch(BUILDING_DATA_URL, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
