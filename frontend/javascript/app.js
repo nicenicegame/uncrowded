@@ -87,7 +87,6 @@ const changeColor = (room, colorScale) => {
   }
 }
 
-let floorCache = []
 let roomCache = []
 // from green to red
 const colors = ['#63ff00', '#d6ff00', '	#ffff00', '#ffc100', '	#ff0000']
@@ -95,30 +94,33 @@ const colors = ['#63ff00', '#d6ff00', '	#ffff00', '#ffc100', '	#ff0000']
 const floorNumber = document.querySelector('.floor-number')
 const floorNav = document.querySelector('.floor-nav')
 const floorContainer = document.querySelector('.floor')
+let links = []
+let roomByFloor = []
 
 const updateElement = () => {
   data.forEach((floor, index) => {
-    // check the fetched data changed by using cache array
-    if (!floorCache.includes(floor.number)) {
-      // add floor selection nav
-      const li = document.createElement('li')
-      li.innerText = `Floor ${floor.number}`
-      floorNav.appendChild(li)
+    // add floor selection nav
+    const li = document.createElement('li')
+    li.innerText = `Floor ${floor.number}`
+    floorNav.appendChild(li)
 
-      // create room for each floor
-      const rooms = document.createElement('div')
-      rooms.classList.add('rooms', `rooms${index}`)
-      floor.rooms.forEach(() => {
-        const roomElement = document.createElement('div')
-        roomElement.classList.add('room')
-        rooms.appendChild(roomElement)
-      })
+    // create room for each floor
+    const rooms = document.createElement('div')
+    rooms.classList.add('rooms', `rooms${index}`)
+    floor.rooms.forEach(() => {
+      const roomElement = document.createElement('div')
+      roomElement.classList.add('room')
+      rooms.appendChild(roomElement)
+    })
 
-      floorContainer.appendChild(rooms)
+    floorContainer.appendChild(rooms)
 
-      // save data to cache
-      floorCache.push(floor.number)
-    }
+    links = [...floorNav.children]
+    roomByFloor = [...floorContainer.children]
+
+    li.addEventListener('click', (e) => {
+      toggleActive(e, index)
+    })
   })
 }
 
@@ -137,32 +139,22 @@ const updateContent = () => {
         rooms[roomIndex].innerHTML = `${room.current}/${room.max}`
       })
 
-      addClickEvent()
       // save data to cache
       roomCache.push(floor.rooms)
     }
   })
 }
 
-const addClickEvent = () => {
-  const links = [...floorNav.children]
-  const roomByFloor = [...floorContainer.children]
-  links.forEach((link, index) => {
-    link.addEventListener('click', (e) => {
-      floorNumber.innerText = e.target.innerText
-
-      roomByFloor.forEach(function (rbf) {
-        rbf.classList.remove('active')
-      })
-
-      links.forEach(function (otherLink) {
-        otherLink.classList.remove('active')
-      })
-
-      roomByFloor[index].classList.add('active')
-      links[index].classList.add('active')
-    })
+const toggleActive = (e, index) => {
+  roomByFloor.forEach(function (rbf) {
+    rbf.classList.remove('active')
   })
+  links.forEach(function (otherLink) {
+    otherLink.classList.remove('active')
+  })
+
+  roomByFloor[index].classList.add('active')
+  e.target.classList.add('active')
 }
 
 // initial
@@ -171,7 +163,6 @@ updateContent()
 
 // implement short polling
 setInterval(() => {
-  updateElement()
   updateContent()
 }, 2000)
 
@@ -253,9 +244,3 @@ setTimeout(() => {
     },
   ]
 }, 3000)
-
-const signinLink = document.querySelector('.signin')
-
-// signinLink.addEventListener('click', () => {
-//   history.pushState({}, '', 'signin.html')
-// })
