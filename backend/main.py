@@ -42,6 +42,14 @@ def signin():
     user_data = request.json
     user = users.find_one({'username': user_data['username']})
 
+    if not user:
+        return {'error': 'Can not find the user.'}
+
+    if user_data['password'] != user['password']:
+        return {'error': 'Password does not match.'}
+
+    return {'message': 'Login successfully'}
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port='3000', debug=True)
