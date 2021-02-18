@@ -1,79 +1,26 @@
-// dummy
-let data = [
-  {
-    number: 1,
-    rooms: [
-      {
-        roomid: 101,
-        max: 40,
-        current: 12,
-        temp: 35,
-        light: 0,
-      },
-      {
-        roomid: 102,
-        max: 20,
-        current: 10,
-        temp: 35,
-        light: 1,
-      },
-      {
-        roomid: 103,
-        max: 30,
-        current: 28,
-        temp: 35,
-        light: 1,
-      },
-      {
-        roomid: 104,
-        max: 30,
-        current: 25,
-        temp: 35,
-        light: 0,
-      },
-    ],
-  },
-  {
-    number: 2,
-    rooms: [
-      {
-        roomid: 201,
-        max: 10,
-        current: 1,
-        temp: 35,
-        light: 1,
-      },
-      {
-        roomid: 202,
-        max: 20,
-        current: 15,
-        temp: 32,
-        light: 0,
-      },
-      {
-        roomid: 203,
-        max: 40,
-        current: 31,
-        temp: 30,
-        light: 1,
-      },
-      {
-        roomid: 204,
-        max: 20,
-        current: 10,
-        temp: 40,
-        light: 0,
-      },
-      {
-        roomid: 205,
-        max: 10,
-        current: 9,
-        temp: 38,
-        light: 1,
-      },
-    ],
-  },
-]
+let data = []
+let roomCache = []
+// from green to red
+const colors = ['#63ff00', '#d6ff00', '	#ffff00', '#ffc100', '	#ff0000']
+const floorNumber = document.querySelector('.floor-number')
+const floorNav = document.querySelector('.floor-nav')
+const floorContainer = document.querySelector('.floor')
+let links = []
+let roomByFloor = []
+
+const fetchData = () => {
+  return fetch('https://exceed11.cpsk-club.xyz/', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((responseData) => {
+      data = responseData.data[0].building
+      console.log(data)
+    })
+}
 
 const changeColor = (room, colorScale) => {
   if (colorScale === 0) {
@@ -85,21 +32,11 @@ const changeColor = (room, colorScale) => {
   }
 }
 
-let roomCache = []
-// from green to red
-const colors = ['#63ff00', '#d6ff00', '	#ffff00', '#ffc100', '	#ff0000']
-
-const floorNumber = document.querySelector('.floor-number')
-const floorNav = document.querySelector('.floor-nav')
-const floorContainer = document.querySelector('.floor')
-let links = []
-let roomByFloor = []
-
 const updateElement = () => {
   data.forEach((floor, index) => {
     // add floor selection nav
     const li = document.createElement('li')
-    li.innerText = `Floor ${floor.number}`
+    li.innerText = `Floor ${floor.floor_number}`
     floorNav.appendChild(li)
 
     // create room for each floor
@@ -154,7 +91,7 @@ const updateContent = () => {
 
       floor.rooms.forEach((room, roomIndex) => {
         const roomElement = rooms[roomIndex]
-        const percent = (room.current / room.max) * 100
+        const percent = (room.current / room.capacity) * 100
         const scale = Math.floor(percent / 20)
 
         const roomName = roomElement.querySelector('h3')
@@ -163,8 +100,8 @@ const updateContent = () => {
         const light = roomElement.querySelector('.light')
         const temp = roomElement.querySelector('.temp')
 
-        roomName.innerText = `${room.roomid}`
-        peopleAmount.innerText = `${room.current}/${room.max}`
+        roomName.innerText = `${room.name}`
+        peopleAmount.innerText = `${room.current}/${room.capacity}`
         changeColor(peopleStatus, scale)
         light.innerHTML = `<i class="fa${
           room.light === 1 ? 's' : 'r'
@@ -193,89 +130,14 @@ const toggleActive = (e, index) => {
 }
 
 // initial
-updateElement()
-updateContent()
+fetchData().then(() => {
+  updateElement()
+  updateContent()
+})
 
 // implement short polling
 setInterval(() => {
-  updateContent()
-}, 2000)
-
-// update dummy data
-setTimeout(() => {
-  data = [
-    {
-      number: 1,
-      rooms: [
-        {
-          roomid: 101,
-          max: 40,
-          current: 20,
-          temp: 34,
-          light: 1,
-        },
-        {
-          roomid: 102,
-          max: 20,
-          current: 19,
-          temp: 36,
-          light: 1,
-        },
-        {
-          roomid: 103,
-          max: 30,
-          current: 10,
-          temp: 34,
-          light: 0,
-        },
-        {
-          roomid: 104,
-          max: 30,
-          current: 12,
-          temp: 36,
-          light: 1,
-        },
-      ],
-    },
-    {
-      number: 2,
-      rooms: [
-        {
-          roomid: 201,
-          max: 10,
-          current: 10,
-          temp: 34,
-          light: 0,
-        },
-        {
-          roomid: 202,
-          max: 20,
-          current: 12,
-          temp: 31,
-          light: 1,
-        },
-        {
-          roomid: 203,
-          max: 40,
-          current: 37,
-          temp: 35,
-          light: 1,
-        },
-        {
-          roomid: 204,
-          max: 20,
-          current: 5,
-          temp: 36,
-          light: 1,
-        },
-        {
-          roomid: 205,
-          max: 10,
-          current: 4,
-          temp: 35,
-          light: 1,
-        },
-      ],
-    },
-  ]
-}, 3000)
+  fetchData().then(() => {
+    updateContent()
+  })
+}, 15000)
