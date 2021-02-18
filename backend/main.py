@@ -20,28 +20,23 @@ def get_hardware():
 
     return {"data": data}
 
-@app.route('/hardware', methods=['POST'])
+@app.route('/hardware', methods=['PUT'])
 def post_hardware():
     data = request.json
-    
+
     filt = {"room_id": data["room_id"]}
     query = building.find(filt)
     query["current"] += data["status"]
+    query["light"] = data["light"]
+    query["alert"] = data["alert"]
+    query["temp"] = data["temp"]
 
-    
     if query["current"] < 0:
         query["current"] = 0
     
-    # {
-    # room_id: 201,
-    # status: 0 (no activities), 1 (in คนเข้า), -1 (out คนออก),
-    # light: 0,
-    # alert: 0,
-    # temp: 25 
-    # }
+    building.update_one(query)
 
-    output = []
-    return {"output": output}
+    return {"message": "update complete!"}
 
 @app.route('/', methods=['GET'])
 def get_data():
@@ -59,7 +54,7 @@ def get_data():
 def update_data():
     data = request.json
     
-    building.insert_one({"floor":1})
+    building.update_one(data)
 
     return {"message": "insert complete!"}
 
