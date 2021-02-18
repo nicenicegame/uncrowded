@@ -30,6 +30,7 @@ const signinForm = document.querySelector('.signin-form')
 
 usernameInput.addEventListener('input', inputChangeHandler)
 passwordInput.addEventListener('input', inputChangeHandler)
+
 signinForm.addEventListener('submit', (e) => {
   e.preventDefault()
 

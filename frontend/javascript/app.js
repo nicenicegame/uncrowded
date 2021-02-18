@@ -76,12 +76,10 @@ let data = [
 ]
 
 const changeColor = (room, colorScale) => {
-  room.style.color = 'black'
   if (colorScale === 0) {
     room.style.background = colors[0]
   } else if (colorScale === 5) {
     room.style.background = colors[4]
-    room.style.color = 'white'
   } else {
     room.style.background = colors[colorScale - 1]
   }
@@ -110,6 +108,29 @@ const updateElement = () => {
     floor.rooms.forEach(() => {
       const roomElement = document.createElement('div')
       roomElement.classList.add('room')
+
+      const roomName = document.createElement('h3')
+      const status = document.createElement('div')
+      status.classList.add('status')
+
+      const light = document.createElement('div')
+      light.classList.add('light')
+      const temp = document.createElement('p')
+      temp.classList.add('temp')
+      const people = document.createElement('div')
+      people.classList.add('people')
+      const peopleAmount = document.createElement('p')
+      peopleAmount.classList.add('people-amount')
+      const peopleStatus = document.createElement('div')
+      peopleStatus.classList.add('people-status')
+
+      people.appendChild(peopleAmount)
+      people.appendChild(peopleStatus)
+      status.appendChild(people)
+      status.appendChild(light)
+      status.appendChild(temp)
+      roomElement.appendChild(roomName)
+      roomElement.appendChild(status)
       rooms.appendChild(roomElement)
     })
 
@@ -132,11 +153,23 @@ const updateContent = () => {
       const rooms = [...roomsContainer.children]
 
       floor.rooms.forEach((room, roomIndex) => {
+        const roomElement = rooms[roomIndex]
         const percent = (room.current / room.max) * 100
         const scale = Math.floor(percent / 20)
-        changeColor(rooms[roomIndex], scale)
 
-        rooms[roomIndex].innerHTML = `${room.current}/${room.max}`
+        const roomName = roomElement.querySelector('h3')
+        const peopleAmount = roomElement.querySelector('.people-amount')
+        const peopleStatus = roomElement.querySelector('.people-status')
+        const light = roomElement.querySelector('.light')
+        const temp = roomElement.querySelector('.temp')
+
+        roomName.innerText = `${room.roomid}`
+        peopleAmount.innerText = `${room.current}/${room.max}`
+        changeColor(peopleStatus, scale)
+        light.innerHTML = `<i class="fa${
+          room.light === 1 ? 's' : 'r'
+        } fa-lightbulb fa-2x"></i>`
+        temp.innerHTML = `${room.temp}&deg;C`
       })
 
       // save data to cache
@@ -146,6 +179,8 @@ const updateContent = () => {
 }
 
 const toggleActive = (e, index) => {
+  floorNumber.innerText = e.target.innerText
+
   roomByFloor.forEach(function (rbf) {
     rbf.classList.remove('active')
   })
