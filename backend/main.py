@@ -6,6 +6,7 @@ from datetime import date
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb://exceed_group11:2grm46fn@158.108.182.0:2255/exceed_group11'
+app.config['CORS_HEADERS'] = 'Content-Type'
 CORS(app)
 mongo = PyMongo(app)
 
