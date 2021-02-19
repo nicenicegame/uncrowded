@@ -61,6 +61,7 @@ function sendThemBack(parameter) {
 	})
   		.then((response) => response.json())
   		.then((json) => console.log(json));
+	location.reload();
 }
 
 
@@ -80,8 +81,7 @@ function nameChange() {
 			sendThemBack(json);
 			console.log(json)
 		})
-	  	gotData()
-    	showSetting()
+	  	
   }
 }
 
@@ -100,8 +100,7 @@ function capChange() {
 			sendThemBack(json);
 			console.log(json)
 		})
-	  	gotData()
-    	showSetting()
+	  	
   }
 }
 
@@ -117,8 +116,7 @@ function modeChange() {
 			sendThemBack(json);
 			console.log(json)
 		})
-		gotData()
-    	showSetting()
+		
 }
 
 function goSetting(inputtype) {
