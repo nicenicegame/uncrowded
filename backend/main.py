@@ -1,9 +1,12 @@
 from flask import Flask, request
+from flask_cors import CORS
 from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
 from datetime import date
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb://exceed_group11:2grm46fn@158.108.182.0:2255/exceed_group11'
+CORS(app)
 mongo = PyMongo(app)
 
 building = mongo.db.building
@@ -58,10 +61,12 @@ def get_data():
 @app.route('/', methods=['PUT'])
 def update_data():
     data = request.json
+    data_id = ObjectId('602e536404a4d40008221a67')
 
-    building.update_one(data)
+    building.replace_one({'_id': data_id},
+                         {'building': data['building']})
 
-    return {"message": "insert complete!"}
+    return {"message": "Update complete"}
 
 
 @app.route('/signin', methods=['POST'])
