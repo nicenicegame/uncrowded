@@ -55,7 +55,7 @@ def get_data():
                 "floor_number": data["floor_number"],
                 "rooms": data["rooms"]
             })
-    return {"data": result}
+    return {"building": result}
 
 
 @app.route('/', methods=['PUT'])
