@@ -61,7 +61,7 @@ def get_data():
 @app.route('/', methods=['PUT'])
 def update_data():
     data = request.json
-    data_id = ObjectId('602e536404a4d40008221a67')
+    data_id = ObjectId('602fc8b704a4d40008221a69')
 
     building.replace_one({'_id': data_id},
                          {'building': data['building']})
