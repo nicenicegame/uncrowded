@@ -1,0 +1,39 @@
+@charset "utf-8";
+/* CSS Document */
+
+.sbutton{
+  	background-color: #008CBA; /* blue */
+  	border: none;
+  	color: white;
+  	padding: 8px 32px;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: 16px;
+	border-radius: 35%;
+
+}
+.notbutton{
+  	background-color: #f44336; /* red */
+  	border: none;
+  	color: white;
+  	padding: 8px 32px;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: 16px;
+	border-radius: 35%;
+
+}
+.cfbutton{
+  	background-color: #4CAF50; /* red */
+  	border: none;
+  	color: white;
+  	padding: 8px 32px;
+  	text-align: center;
+  	text-decoration: none;
+  	display: inline-block;
+  	font-size: 16px;
+	border-radius: 35%;
+
+}

@@ -1,6 +1,7 @@
 @import './partials/global.css';
 @import './partials/nav.css';
 
+
 main {
   padding: 2rem 0;
   display: flex;
@@ -85,75 +86,3 @@ main {
   transition: background 0.2s ease-in-out;
 }
 
-/* Create three equal columns that floats next to each other */
-.gColumn {
-  float: left;
-  width: 50%;
-  padding: 15px;
-}
-
-/* Clear floats after the columns */
-.gRow:after {
-  content: '';
-  display: table;
-  clear: both;
-}
-
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .gColumn {
-    width: 100%;
-  }
-}
-
-.sColumn {
-  float: left;
-  width: 33.33%;
-  padding: 15px;
-}
-
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-  .sColumn {
-    width: 100%;
-  }
-}
-
-/* Make label to center*/
-.center {
-  text-align: center;
-}
-
-.sbutton {
-  background-color: #008cba; /* blue */
-  border: none;
-  color: white;
-  padding: 8px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 35%;
-}
-.notbutton {
-  background-color: #f44336; /* red */
-  border: none;
-  color: white;
-  padding: 8px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 35%;
-}
-.cfbutton {
-  background-color: #4caf50; /* red */
-  border: none;
-  color: white;
-  padding: 8px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 35%;
-}

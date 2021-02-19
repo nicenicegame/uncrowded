@@ -1,0 +1,23 @@
+
+@charset "utf-8";
+/* CSS Document */
+@import './index.css';
+/* Create three equal columns that floats next to each other */
+.gColumn {
+  float: left;
+  width: 50%;
+  padding: 15px;
+}
+
+/* Clear floats after the columns */
+.gRow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width:600px) {
+  .gColumn {
+    width: 100%;
+  }
+}
