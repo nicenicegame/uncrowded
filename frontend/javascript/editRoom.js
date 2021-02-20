@@ -1,4 +1,4 @@
-const connectlink = 'https://exceed11.cpsk-club.xyz/'
+const connectlink = 'http://localhost:3000'
 
 const signinLink = document.querySelector('.signin')
 const signoutLink = document.querySelector('.signout')
@@ -33,6 +33,23 @@ function getUrlParam(parameter, defaultvalue) {
   return urlparameter
 }
 
+function peopleName(roomname) {
+  var a = '<h2>People in ' + roomname + '</h2>'
+  document.getElementById('Graphhead').innerHTML = a
+}
+function peoplebarName(roomname) {
+    var a = '<h2>Bargraph that show people in ' + roomname + '</h2>'
+    document.getElementById('barhead').innerHTML = a
+  }
+function powerName(roomname) {
+  var a = '<h2>Energy in ' + roomname + '</h2>'
+  document.getElementById('energyhead').innerHTML = a
+}
+function tempName(roomname) {
+  var a = '<h2>Temperature in ' + roomname + '</h2>'
+  document.getElementById('temperaturehead').innerHTML = a
+}
+
 var roomid = getUrlParam('roomid', 000)
 var floor = getUrlParam('floor', 0)
 
@@ -40,6 +57,11 @@ const gotData = () => {
   return fetch(connectlink)
     .then((response) => response.json())
     .then((responseData) => {
+      console.log(responseData)
+      peopleName(responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1].name)
+      peoplebarName(responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1].name)
+      powerName(responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1].name)
+      tempName(responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1].name)
       document.getElementById('roomID').innerHTML =
         responseData.building[floor - 1].rooms[
           (roomid % (floor * 100)) - 1
@@ -68,6 +90,7 @@ function onoffStatus(statmeter) {
 }
 
 function sendThemBack(parameter) {
+  console.log(parameter);
   /* fetch put back */
   fetch(connectlink, {
     method: 'PUT',
@@ -83,9 +106,11 @@ function sendThemBack(parameter) {
         window.location.href = './index.html'
         sessionStorage.removeItem('access_token')
       }
+      gotData()
     })
     .catch((err) => {
       console.log(err)
+      showSetting()
     })
 }
 
