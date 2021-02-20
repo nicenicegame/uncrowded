@@ -82,8 +82,8 @@ function sendThemBack(parameter) {
     },
   })
     .then((response) => response.json())
-    .then((json) => {console.log(json)
-                      showSetting()
+    .then((json) => {console.log(json);
+                    showSetting();
     })
 }
 
