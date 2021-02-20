@@ -3,7 +3,7 @@
 @import './partials/global.css';
 
 .header {
-  padding-top: 2rem;
+  padding: 2rem 0 1rem;
 }
 
 table {
@@ -16,4 +16,10 @@ td {
   padding: 8px;
   text-align: center;
   border-bottom: 1px solid #ddd;
+}
+
+@media screen and (max-width: 600px) {
+  .header {
+    text-align: center;
+  }
 }

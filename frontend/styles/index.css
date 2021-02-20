@@ -66,6 +66,7 @@ main {
 .room:hover {
   transform: scale(1.025);
   box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.2);
+  background: rgb(240, 240, 240);
 }
 
 .room h3 {
