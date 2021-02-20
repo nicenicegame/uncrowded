@@ -115,7 +115,7 @@ function sendThemBack(parameter) {
     .then((response) => response.json())
     .then((json) => {
       if (json.error) {
-        window.location.href = './index.html'
+        window.location.href = './signin.html'
         sessionStorage.removeItem('access_token')
       }
       gotData()

@@ -58,9 +58,15 @@ const updateElement = () => {
     // create room for each floor
     const rooms = document.createElement('div')
     rooms.classList.add('rooms', `rooms${index}`)
-    floor.rooms.forEach(() => {
+    floor.rooms.forEach((room) => {
       const roomElement = document.createElement('div')
       roomElement.classList.add('room')
+
+      roomElement.addEventListener('click', () => {
+        window.location.href = `./graph.html?roomid=${room.room_id}&floor=${
+          index + 1
+        }`
+      })
 
       const roomName = document.createElement('h3')
       const status = document.createElement('div')
@@ -77,8 +83,8 @@ const updateElement = () => {
       const peopleStatus = document.createElement('div')
       peopleStatus.classList.add('people-status')
 
-      people.appendChild(peopleAmount)
       people.appendChild(peopleStatus)
+      people.appendChild(peopleAmount)
       status.appendChild(people)
       status.appendChild(light)
       status.appendChild(temp)

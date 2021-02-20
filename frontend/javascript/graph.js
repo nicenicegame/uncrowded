@@ -1,5 +1,21 @@
 const BUILDING_DATA_URL = 'https://exceed11.cpsk-club.xyz'
 
+const signinLink = document.querySelector('.signin')
+const signoutLink = document.querySelector('.signout')
+const editRoomLink = document.querySelector('.edit-room')
+
+const token = sessionStorage.getItem('access_token')
+if (token) {
+  signinLink.parentElement.style.display = 'none'
+} else {
+  signoutLink.parentElement.style.display = 'none'
+  editRoomLink.parentElement.style.display = 'none'
+}
+
+signoutLink.addEventListener('click', () => {
+  sessionStorage.removeItem('access_token')
+})
+
 function getUrlVars() {
   var vars = {}
   var parts = window.location.href.replace(
@@ -24,7 +40,7 @@ function peopleName(roomname) {
   document.getElementById('Graphhead').innerHTML = a
 }
 function peoplebarName(roomname) {
-  var a = '<h2>Bargraph that show people in ' + roomname + '</h2>'
+  var a = '<h2>People in ' + roomname + ' (Bar)</h2>'
   document.getElementById('barhead').innerHTML = a
 }
 function powerName(roomname) {

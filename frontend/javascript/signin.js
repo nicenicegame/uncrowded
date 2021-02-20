@@ -21,16 +21,30 @@ const handleSignin = ({ username, password }) => {
   })
 }
 
-let userData = {
-  username: '',
-  password: '',
-}
-
 const inputChangeHandler = (e) => {
   e.target.style.border = '1.5px solid transparent'
   e.target.style.background = '#eee'
   const inputName = e.target.name
   userData[inputName] = e.target.value
+}
+
+const displayErrorMessage = (message) => {
+  errorMessage.innerText = message
+  errorMessage.style.display = 'block'
+}
+
+const setInvalidFields = () => {
+  userInput.forEach((input) => {
+    if (!input.value) {
+      input.style.border = '1.5px solid red'
+      input.style.background = '#e4baba'
+    }
+  })
+}
+
+let userData = {
+  username: '',
+  password: '',
 }
 
 const usernameInput = document.querySelector('.username-input')
@@ -46,12 +60,9 @@ signinForm.addEventListener('submit', (e) => {
   e.preventDefault()
 
   if (!userData.username || !userData.password) {
-    userInput.forEach((input) => {
-      if (!input.value) {
-        input.style.border = '1.5px solid red'
-        input.style.background = '#e4baba'
-      }
-    })
+    setInvalidFields()
+    displayErrorMessage('Username and password cannot be blank.')
+    return
   }
 
   handleSignin(userData)
@@ -59,8 +70,7 @@ signinForm.addEventListener('submit', (e) => {
     .then((responseData) => {
       const token = responseData.access_token
       if (!token) {
-        errorMessage.innerText = 'Incorrect username or password.'
-        errorMessage.style.display = 'block'
+        displayErrorMessage('Incorrect username or password.')
         return
       }
       sessionStorage.setItem('access_token', token)
