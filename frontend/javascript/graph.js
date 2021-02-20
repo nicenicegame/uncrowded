@@ -1,4 +1,4 @@
-const BUILDING_DATA_URL = 'https://exceed11.cpsk-club.xyz'
+const BUILDING_DATA_URL = 'http://localhost:3000/' //'https://exceed11.cpsk-club.xyz' is real link
 
 function getUrlVars() {
     var vars = {};
@@ -18,17 +18,21 @@ function getUrlParam(parameter, defaultvalue){
 
 
 
-function headname(roomname){
+function peopleName(roomname){
     var a = "<h2>People in " + roomname + "</h2>";
     document.getElementById("Graphhead").innerHTML = a;
 }
 
-function powername(roomname){
+function powerName(roomname){
     var a = "<h2>Energy in " + roomname + "</h2>";
 	document.getElementById("energyhead").innerHTML = a;
     
 }
-
+function tempName(roomname){
+    var a = "<h2>Temperature in " + roomname + "</h2>";
+	document.getElementById("temperaturehead").innerHTML = a;
+    
+}
 
 
 var roomid = getUrlParam('roomid', 'outside')
@@ -55,13 +59,32 @@ console.log(floor)
 var label = []
 var people = [0]
 var light = [0]
+var bgcolor = ['rgba(75, 192, 192, 0.2)']
+var bodycolor = ['rgba(75, 192, 192, 1)']
 var sumlight = 0
-
+var temperature = [0]
 function energyCal(status){
 	if(status==1){
 		sumlight++;
 	}
 	light.push(sumlight);
+}
+
+function coloringGraph(people,cap){
+	if(people<(cap*0.8)){
+		bgcolor.push('rgba(75, 192, 192, 0.2)')
+		bodycolor.push('rgba(75, 192, 192, 1)')
+	}
+	else{
+		if(people<cap){
+			bgcolor.push('rgba(255, 206, 86, 0.2)')
+			bodycolor.push('rgba(255, 206, 86, 1)')
+		}
+		else{
+			bgcolor.push('rgba(255, 99, 132, 0.2)')
+			bodycolor.push('rgba(255, 99, 132, 1)')
+		}
+	}
 }
 
 const fetchData = () => {
@@ -73,10 +96,14 @@ const fetchData = () => {
   })
     .then((response) => response.json())
     .then((responseData) => {
-      people.push(responseData.data[floor-1].rooms[roomid%(floor*100)-1].current)
-      energyCal(responseData.data[floor-1].rooms[roomid%(floor*100)-1].light)
-	  headname(responseData.data[floor-1].rooms[roomid%(floor*100)-1].name)
-	  powername(responseData.data[floor-1].rooms[roomid%(floor*100)-1].name)
+	  //console.log(responseData)
+      people.push(responseData.building[floor-1].rooms[roomid%(floor*100)-1].current)
+      energyCal(responseData.building[floor-1].rooms[roomid%(floor*100)-1].light)
+	  coloringGraph(responseData.building[floor-1].rooms[roomid%(floor*100)-1].current, responseData.building[floor-1].rooms[roomid%(floor*100)-1].capacity)
+	  temperature.push(responseData.building[floor-1].rooms[roomid%(floor*100)-1].temp)
+	  peopleName(responseData.building[floor-1].rooms[roomid%(floor*100)-1].name)
+	  powerName(responseData.building[floor-1].rooms[roomid%(floor*100)-1].name)
+	  tempName(responseData.building[floor-1].rooms[roomid%(floor*100)-1].name)
 	  
     })
     
@@ -126,6 +153,30 @@ var peopleChart = new Chart(ctx, {
     }
 });
 
+var ctb = document.getElementById('Peoplebar').getContext('2d');
+var peopleChart = new Chart(ctb, {
+    type: 'bar',
+    data: {
+        labels: label,
+        datasets: [{
+            label: 'number of people',
+            data: people,
+            backgroundColor: bgcolor,
+            borderColor: bodycolor,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});	
+	
 var pwx = document.getElementById('Powerg').getContext('2d');
 var powerChart = new Chart(pwx, {
     type: 'line',
@@ -139,6 +190,35 @@ var powerChart = new Chart(pwx, {
             ],
             borderColor: [
                 'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+var tmpx = document.getElementById('tempg').getContext('2d');
+var tempChart = new Chart(tmpx, {
+    type: 'line',
+    data: {
+        labels: label,
+        datasets: [{
+            label: 'Temperature in Celcius',
+            data: temperature,
+            backgroundColor: [
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(153, 102, 255, 1)'
             ],
             borderWidth: 1
         }]
