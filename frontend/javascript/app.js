@@ -149,6 +149,7 @@ const toggleActive = (e, index) => {
 
   roomByFloor[index].classList.add('active')
   e.target.classList.add('active')
+  sessionStorage.setItem('activeIndex', index)
 }
 
 // initial
@@ -156,7 +157,14 @@ fetchData()
   .then(() => {
     updateElement()
     updateContent()
-    floorNumber.innerText = 'Please select the floor to display'
+    let activeIndex = sessionStorage.getItem('activeIndex')
+    if (activeIndex) {
+      floorNumber.innerText = links[activeIndex].innerText
+      links[activeIndex].classList.add('active')
+      roomByFloor[activeIndex].classList.add('active')
+    } else {
+      floorNumber.innerText = 'Please select the floor to display'
+    }
   })
   .catch((err) => {
     console.log(err)
