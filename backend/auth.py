@@ -1,5 +1,10 @@
 from werkzeug.security import safe_str_cmp
 
+import environ
+import os
+
+env = environ.Env()
+env.read_env()
 
 class User(object):
     def __init__(self, id, username, password):
@@ -12,8 +17,9 @@ class User(object):
 
 
 users = [
-    User(1, 'admin', 'group11admin')
+    User(1, os.environ.get('USERNAME_ADMIN', default='XXX'), os.environ.get('PASSWORD_ADMIN', default='YYY'))
 ]
+
 
 username_table = {u.username: u for u in users}
 userid_table = {u.id: u for u in users}

@@ -6,12 +6,19 @@ from auth import authenticate, identity
 from bson.objectid import ObjectId
 from datetime import timedelta
 
+import environ
+import os
+
+env = environ.Env()
+env.read_env()
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb://exceed_group11:2grm46fn@158.108.182.0:2255/exceed_group11'
-app.config['SECRET_KEY'] = 'secret'
-app.config['JWT_EXPIRATION_DELTA'] = timedelta(seconds=600)
 CORS(app)
+app.config['CORS_HEADERS'] = os.environ.get('CORSHEADER', default="CORS")
+app.config['MONGO_URI'] = os.environ.get('URI', default="DATABASE")
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', default='SECRET')
+app.config['JWT_EXPIRATION_DELTA'] = timedelta(seconds=600)
+
 mongo = PyMongo(app)
 jwt = JWT(app, authenticate, identity)
 
@@ -38,7 +45,7 @@ def get_hardware():
 @app.route('/hardware', methods=['PUT'])
 def put_hardware():
     data = request.json
-    data_id = ObjectId('602fc8b704a4d40008221a69')
+    data_id = os.environ.get('O_ID', default='ObjectID')
 
     query = building.find()
 
@@ -84,13 +91,13 @@ def get_data():
 @jwt_required()
 def update_data():
     data = request.json
-    data_id = ObjectId('602fc8b704a4d40008221a69')
+    data_id = os.environ.get('O_ID', default='ObjectID')
 
     building.update_one({'_id': data_id}, {
         '$set': {'building': data['building']}
     })
 
-    return {"message": "Update complete"}
+    return {"message": "Updated successfully"}
 
 
 if __name__ == "__main__":
