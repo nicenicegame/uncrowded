@@ -12,9 +12,11 @@ env = environ.Env()
 env.read_env()
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = os.environ.get('URI', default="DATABASE")
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', default='secret')
 CORS(app)
+app.config['CORS_HEADERS'] = os.environ.get('CORSHEADER', default="CORS")
+app.config['MONGO_URI'] = os.environ.get('URI', default="DATABASE")
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', default='SECRET')
+
 mongo = PyMongo(app)
 jwt = JWT(app, authenticate, identity)
 
@@ -93,7 +95,7 @@ def update_data():
         '$set': {'building': data['building']}
     })
 
-    return {"message": "Update complete"}
+    return {"message": "Updated successfully"}
 
 
 if __name__ == "__main__":
