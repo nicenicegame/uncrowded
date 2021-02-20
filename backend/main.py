@@ -37,13 +37,13 @@ def get_hardware():
         "mode": result[0]["light"]
     }
 
-    return {"data": data}
-
+    return data
 
 @app.route('/hardware', methods=['PUT'])
 def put_hardware():
     data = request.json
-    data_id = os.environ.get('O_ID', default='ObjectID')
+    data_id = ObjectId(os.environ.get('OID', default='XX'))
+    
 
     query = building.find()
 
@@ -89,7 +89,7 @@ def get_data():
 @jwt_required()
 def update_data():
     data = request.json
-    data_id = os.environ.get('O_ID', default='ObjectID')
+    data_id = ObjectId(os.environ.get('OID', default='XX'))
 
     building.update_one({'_id': data_id}, {
         '$set': {'building': data['building']}
