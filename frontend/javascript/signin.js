@@ -1,4 +1,4 @@
-const SIGNIN_URL = 'http://0.0.0.0:3000/auth'
+const SIGNIN_URL = 'https://exceed11.cpsk-club.xyz/auth'
 
 const signoutLink = document.querySelector('.signout')
 const editRoomLink = document.querySelector('.edit-room')

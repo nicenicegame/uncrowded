@@ -1,4 +1,4 @@
-const connectlink = 'http://0.0.0.0:3000/'
+const connectlink = 'https://exceed11.cpsk-club.xyz/'
 
 const signinLink = document.querySelector('.signin')
 const signoutLink = document.querySelector('.signout')
