@@ -8,6 +8,22 @@ const colors = ['#63ff00', '#d6ff00', '	#ffff00', '#ffc100', '	#ff0000']
 const floorNumber = document.querySelector('.floor-number')
 const floorNav = document.querySelector('.floor-nav')
 const floorContainer = document.querySelector('.floor')
+const signinLink = document.querySelector('.signin')
+const signoutLink = document.querySelector('.signout')
+const editRoomLink = document.querySelector('.edit-room')
+
+// check authentication
+const token = sessionStorage.getItem('access_token')
+if (token) {
+  signinLink.parentElement.style.display = 'none'
+} else {
+  signoutLink.parentElement.style.display = 'none'
+  editRoomLink.parentElement.style.display = 'none'
+}
+
+signoutLink.addEventListener('click', () => {
+  sessionStorage.removeItem('access_token')
+})
 
 const fetchData = () => {
   return fetch(BUILDING_DATA_URL, {

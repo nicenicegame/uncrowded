@@ -1,3 +1,17 @@
+const signinLink = document.querySelector('.signin')
+const signoutLink = document.querySelector('.signout')
+
+const token = sessionStorage.getItem('access_token')
+if (!token) {
+  window.location.href = './index.html'
+} else {
+  signinLink.parentElement.style.display = 'none'
+}
+
+signoutLink.addEventListener('click', () => {
+  sessionStorage.removeItem('access_token')
+})
+
 function getUrlVars() {
   var vars = {}
   var parts = window.location.href.replace(
