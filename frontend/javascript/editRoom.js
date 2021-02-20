@@ -1,5 +1,15 @@
 const connectlink = 'https://exceed11.cpsk-club.xyz'
 
+if (!token) {
+  window.location.href = './index.html'
+} else {
+  signinLink.parentElement.style.display = 'none'
+}
+
+signoutLink.addEventListener('click', () => {
+  sessionStorage.removeItem('access_token')
+})
+
 function getUrlVars() {
   var vars = {}
   var parts = window.location.href.replace(

@@ -2,12 +2,14 @@ const BUILDING_DATA_URL = 'https://exceed11.cpsk-club.xyz'
 
 const signinLink = document.querySelector('.signin')
 const signoutLink = document.querySelector('.signout')
+const editRoomLink = document.querySelector('.edit-room')
 
 const token = sessionStorage.getItem('access_token')
-if (!token) {
-  window.location.href = './index.html'
-} else {
+if (token) {
   signinLink.parentElement.style.display = 'none'
+} else {
+  signoutLink.parentElement.style.display = 'none'
+  editRoomLink.parentElement.style.display = 'none'
 }
 
 signoutLink.addEventListener('click', () => {
