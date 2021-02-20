@@ -1,4 +1,4 @@
-const connectlink = 'http://localhost:3000/'; // real link is https://exceed11.cpsk-club.xyz/
+const connectlink = 'https://exceed11.cpsk-club.xyz/'
 
 function getUrlVars() {
   var vars = {}

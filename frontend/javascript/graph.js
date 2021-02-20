@@ -1,4 +1,4 @@
-const BUILDING_DATA_URL = 'http://localhost:3000/' //'https://exceed11.cpsk-club.xyz' is real link
+const BUILDING_DATA_URL = 'https://exceed11.cpsk-club.xyz' //is real link
 
 function getUrlVars() {
     var vars = {};
