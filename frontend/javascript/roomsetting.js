@@ -82,7 +82,9 @@ function sendThemBack(parameter) {
     },
   })
     .then((response) => response.json())
-    .then((json) => console.log(json))
+    .then((json) => {console.log(json)
+                      showSetting()
+    })
 }
 
 function nameChange() {
@@ -101,8 +103,8 @@ function nameChange() {
         sendThemBack(json)
         console.log(json)
       })
-    gotData()
-    showSetting()
+    //gotData()
+    //showSetting()
   }
 }
 
@@ -123,8 +125,8 @@ function capChange() {
         sendThemBack(json)
         console.log(json)
       })
-    gotData()
-    showSetting()
+    //gotData()
+    //showSetting()
   }
 }
 
@@ -142,8 +144,8 @@ function modeChange() {
       sendThemBack(json)
       console.log(json)
     })
-  gotData()
-  showSetting()
+  //gotData()
+  //showSetting()
 }
 
 function goSetting(inputtype) {
