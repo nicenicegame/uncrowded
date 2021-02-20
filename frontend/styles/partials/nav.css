@@ -30,6 +30,10 @@ header nav {
   display: flex;
 }
 
+.nav-links li {
+  margin-left: 5vw;
+}
+
 .nav-links li a {
   color: rgb(228, 228, 228);
   position: relative;

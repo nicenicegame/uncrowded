@@ -1,19 +1,23 @@
-let userData = {
-  username: '',
-  password: '',
+const SIGNIN_URL = 'http://0.0.0.0:3000/auth'
+
+const token = sessionStorage.getItem('access_token')
+if (token) {
+  window.location.href = './index.html'
 }
 
-const SIGNIN_URL = ''
-
-const signin = ({ username, password }) => {
-  // send post request to backend and create a user
+const handleSignin = ({ username, password }) => {
   return fetch(SIGNIN_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ user: { username, password } }),
+    body: JSON.stringify({ username, password }),
   })
+}
+
+let userData = {
+  username: '',
+  password: '',
 }
 
 const inputChangeHandler = (e) => {
@@ -27,6 +31,7 @@ const usernameInput = document.querySelector('.username-input')
 const passwordInput = document.querySelector('.password-input')
 const userInput = [usernameInput, passwordInput]
 const signinForm = document.querySelector('.signin-form')
+const errorMessage = document.querySelector('.error-message')
 
 usernameInput.addEventListener('input', inputChangeHandler)
 passwordInput.addEventListener('input', inputChangeHandler)
@@ -43,7 +48,19 @@ signinForm.addEventListener('submit', (e) => {
     })
   }
 
-  signin(userData)
+  handleSignin(userData)
     .then((response) => response.json())
-    .then((responseData) => console.log(responseData))
+    .then((responseData) => {
+      const token = responseData.access_token
+      if (!token) {
+        errorMessage.innerText = 'Incorrect username or password.'
+        errorMessage.style.display = 'block'
+        return
+      }
+      sessionStorage.setItem('access_token', token)
+      window.location.href = './index.html'
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 })

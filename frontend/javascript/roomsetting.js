@@ -1,4 +1,18 @@
-const connectlink = 'http://localhost:3000/'; // real link is https://exceed11.cpsk-club.xyz/
+const connectlink = 'http://localhost:3000/' // real link is https://exceed11.cpsk-club.xyz/
+
+const signinLink = document.querySelector('.signin')
+const signoutLink = document.querySelector('.signout')
+
+const token = sessionStorage.getItem('access_token')
+if (!token) {
+  window.location.href = './index.html'
+} else {
+  signinLink.parentElement.style.display = 'none'
+}
+
+signoutLink.addEventListener('click', () => {
+  sessionStorage.removeItem('access_token')
+})
 
 function getUrlVars() {
   var vars = {}
@@ -19,27 +33,34 @@ function getUrlParam(parameter, defaultvalue) {
   return urlparameter
 }
 
-
 var roomid = getUrlParam('roomid', 000)
 var floor = getUrlParam('floor', 0)
 
 console.log(roomid)
 console.log(floor)
 
-
 const gotData = () => {
-  return fetch(connectlink).then((response) => response.json())
+  return fetch(connectlink)
+    .then((response) => response.json())
     .then((responseData) => {
-      document.getElementById('roomID').innerHTML = (responseData.building[floor-1].rooms[roomid%(floor*100)-1].room_id);
-	  document.getElementById('roomName').innerHTML = (responseData.building[floor-1].rooms[roomid%(floor*100)-1].name);
-	  document.getElementById('roomCapacity').innerHTML = (responseData.building[floor-1].rooms[roomid%(floor*100)-1].capacity);
-	  document.getElementById('roomSentry').innerHTML = onoffStatus(responseData.building[floor-1].rooms[roomid%(floor*100)-1].mode);
-	  
-    })}
-
-
-
-
+      document.getElementById('roomID').innerHTML =
+        responseData.building[floor - 1].rooms[
+          (roomid % (floor * 100)) - 1
+        ].room_id
+      document.getElementById('roomName').innerHTML =
+        responseData.building[floor - 1].rooms[
+          (roomid % (floor * 100)) - 1
+        ].name
+      document.getElementById('roomCapacity').innerHTML =
+        responseData.building[floor - 1].rooms[
+          (roomid % (floor * 100)) - 1
+        ].capacity
+      document.getElementById('roomSentry').innerHTML = onoffStatus(
+        responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1]
+          .mode
+      )
+    })
+}
 
 function onoffStatus(statmeter) {
   if (statmeter == 0) {
@@ -51,20 +72,17 @@ function onoffStatus(statmeter) {
 
 function sendThemBack(parameter) {
   /*fetch put back*/
-	console.log(parameter)
-  	fetch(connectlink, {
-  		method: 'PUT',
-  		body: JSON.stringify(parameter),
-  		headers: {
-    		'Content-type': 'application/json',
-  		},
-	})
-  		.then((response) => response.json())
-  		.then((json) => console.log(json));
+  console.log(parameter)
+  fetch(connectlink, {
+    method: 'PUT',
+    body: JSON.stringify(parameter),
+    headers: {
+      'Content-type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json))
 }
-
-
-
 
 function nameChange() {
   var newname = document.getElementById('newName').value
@@ -72,17 +90,18 @@ function nameChange() {
     alert("Don't make the name blank!!")
     showSetting()
   } else {
-    	fetch(connectlink)
-  			.then((response) => response.json())
-  			.then((json) => {
-    		console.log(json)
-    		json.building[floor-1].rooms[roomid%(floor*100)-1].name = newname;              
-			sendThemBack(json);
-			console.log(json)
-		})
-	  	gotData()
-    	showSetting()
-	  	
+    fetch(connectlink)
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json)
+        json.building[floor - 1].rooms[
+          (roomid % (floor * 100)) - 1
+        ].name = newname
+        sendThemBack(json)
+        console.log(json)
+      })
+    gotData()
+    showSetting()
   }
 }
 
@@ -93,33 +112,37 @@ function capChange() {
     console.log(newcap)
     showSetting()
   } else {
-    	fetch(connectlink)
-  			.then((response) => response.json())
-  			.then((json) => {
-    		console.log(json)
-    		json.building[floor-1].rooms[roomid%(floor*100)-1].capacity = newcap;              
-			sendThemBack(json);
-			console.log(json)
-		})
-	  	gotData()
-    	showSetting()
+    fetch(connectlink)
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json)
+        json.building[floor - 1].rooms[
+          (roomid % (floor * 100)) - 1
+        ].capacity = newcap
+        sendThemBack(json)
+        console.log(json)
+      })
+    gotData()
+    showSetting()
   }
 }
 
 function modeChange() {
   var newstate = document.getElementById('newMode').value
-  
+
   console.log(newstate)
   fetch(connectlink)
-  			.then((response) => response.json())
-  			.then((json) => {
-    		console.log(json)
-    		json.building[floor-1].rooms[roomid%(floor*100)-1].mode = newstate;              
-			sendThemBack(json);
-			console.log(json)
-		})
-		gotData()
-    	showSetting()
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json)
+      json.building[floor - 1].rooms[
+        (roomid % (floor * 100)) - 1
+      ].mode = newstate
+      sendThemBack(json)
+      console.log(json)
+    })
+  gotData()
+  showSetting()
 }
 
 function goSetting(inputtype) {
@@ -147,13 +170,13 @@ var cap = 'capa'
 var mod = 'mode'
 
 function showSetting() {
-  gotData();
+  gotData()
   document.getElementById('roomNamebtn').innerHTML =
     '<button type="button" class="sbutton" onclick="goSetting(nnamee)">Edit</button>'
-    
+
   document.getElementById('roomCapacitybtn').innerHTML =
     '<button type="button" class="sbutton" onclick="goSetting(cap)">Edit</button>'
- 
+
   document.getElementById('roomSentrybtn').innerHTML =
     '<button type="button" class="sbutton" onclick="goSetting(mod)">Edit</button>'
 }

@@ -1,10 +1,18 @@
 from flask import Flask, request
+from flask_cors import CORS
+from flask_jwt import JWT, jwt_required, current_identity
 from flask_pymongo import PyMongo
+from auth import authenticate, identity
+from bson.objectid import ObjectId
 from datetime import date
+
 
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb://exceed_group11:2grm46fn@158.108.182.0:2255/exceed_group11'
+app.config['SECRET_KEY'] = 'secret'
+CORS(app)
 mongo = PyMongo(app)
+jwt = JWT(app, authenticate, identity)
 
 building = mongo.db.building
 users = mongo.db.users
@@ -12,34 +20,50 @@ users = mongo.db.users
 
 @app.route('/hardware', methods=['GET'])
 def get_hardware():
+    query = building.find()
+    result = []
+    result.append(query[0]["building"][0]["rooms"][0])
 
     data = {
-        "room_id": 201,
-        "capacity": 20,
-        "current": 10,
-        "mode": 0
+        "room_id": result[0]["room_id"],
+        "capacity": result[0]["capacity"],
+        "current": result[0]["current"],
+        "mode": result[0]["light"]
     }
 
     return {"data": data}
 
 
 @app.route('/hardware', methods=['PUT'])
-def post_hardware():
+def put_hardware():
     data = request.json
+    data_id = ObjectId('602fc8b704a4d40008221a69')
 
-    filt = {"room_id": data["room_id"]}
-    query = building.find(filt)
-    query["current"] += data["status"]
-    query["light"] = data["light"]
-    query["alert"] = data["alert"]
-    query["temp"] = data["temp"]
+    query = building.find()
 
-    if query["current"] < 0:
-        query["current"] = 0
+    result = []
+    for build in query:
+        for da in build["building"]:
+            result.append({
+                "floor_number": da["floor_number"],
+                "rooms": da["rooms"]
+            })
 
-    building.update_one(query)
+    for room in result[0]["rooms"]:
+        if room["room_id"] == data["room_id"]:
+            current = room["current"] + data["status"]
+            if current < 0:
+                current = 0
+            room["current"] = current
+            room["alert"] = data["alert"]
+            room["light"] = data["light"]
+            room["temp"] = data["temp"]
 
-    return {"message": "update complete!"}
+    building.update_one({'_id': data_id}, {
+        '$set': {'building': result}
+    })
+
+    return {"message": "Updated successfully"}
 
 
 @app.route('/', methods=['GET'])
@@ -52,30 +76,20 @@ def get_data():
                 "floor_number": data["floor_number"],
                 "rooms": data["rooms"]
             })
-    return {"data": result}
+    return {"building": result}
 
 
 @app.route('/', methods=['PUT'])
+@jwt_required()
 def update_data():
     data = request.json
+    data_id = ObjectId('602fc8b704a4d40008221a69')
 
-    building.update_one(data)
+    building.update_one({'_id': data_id}, {
+        '$set': {'building': data['building']}
+    })
 
-    return {"message": "insert complete!"}
-
-
-@app.route('/signin', methods=['POST'])
-def signin():
-    user_data = request.json
-    user = users.find_one({'username': user_data['username']})
-
-    if not user:
-        return {'error': 'Can not find the user.'}
-
-    if user_data['password'] != user['password']:
-        return {'error': 'Password does not match.'}
-
-    return {'message': 'Login successfully'}
+    return {"message": "Update complete"}
 
 
 if __name__ == "__main__":
