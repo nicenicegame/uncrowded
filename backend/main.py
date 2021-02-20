@@ -15,32 +15,48 @@ users = mongo.db.users
 
 @app.route('/hardware', methods=['GET'])
 def get_hardware():
+    query = building.find()
+    result = []
+    result.append(query[0]["building"][0]["rooms"][0])
 
     data = {
-        "room_id": 201,
-        "capacity": 20,
-        "current": 10,
-        "mode": 0
+        "room_id": result[0]["room_id"],
+        "capacity": result[0]["capacity"],
+        "current": result[0]["current"],
+        "mode": result[0]["light"]
     }
 
     return {"data": data}
 
 
 @app.route('/hardware', methods=['PUT'])
-def post_hardware():
+def put_hardware():
     data = request.json
+    data_id = ObjectId('602fc8b704a4d40008221a69')
 
-    filt = {"room_id": data["room_id"]}
-    query = building.find(filt)
-    query["current"] += data["status"]
-    query["light"] = data["light"]
-    query["alert"] = data["alert"]
-    query["temp"] = data["temp"]
+    query = building.find()
 
-    if query["current"] < 0:
-        query["current"] = 0
+    result = []
+    for build in query:
+        for da in build["building"]:
+            result.append({
+                "floor_number": da["floor_number"],
+                "rooms": da["rooms"]
+            })
 
-    building.update_one(query)
+    for room in result[0]["rooms"]:
+        if room["room_id"] == data["room_id"]:
+            current = room["current"] + data["status"]
+            if current < 0:
+                current = 0
+            room["current"] = current
+            room["alert"] = data["alert"]
+            room["light"] = data["light"]
+            room["temp"] = data["temp"]
+
+    building.update_one({'_id': data_id}, {
+        '$set': {'building': result}
+    })
 
     return {"message": "update complete!"}
 
