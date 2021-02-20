@@ -58,7 +58,7 @@ def put_hardware():
         '$set': {'building': result}
     })
 
-    return {"message": "update complete!"}
+    return {"message": "Updated successfully"}
 
 
 @app.route('/', methods=['GET'])
