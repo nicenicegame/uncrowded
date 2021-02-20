@@ -1,4 +1,4 @@
-const BUILDING_DATA_URL = 'http://localhost:3000'//'https://exceed11.cpsk-club.xyz' //is real link
+const BUILDING_DATA_URL = 'https://exceed11.cpsk-club.xyz'
 
 function getUrlVars() {
   var vars = {}
@@ -24,9 +24,9 @@ function peopleName(roomname) {
   document.getElementById('Graphhead').innerHTML = a
 }
 function peoplebarName(roomname) {
-    var a = '<h2>Bargraph that show people in ' + roomname + '</h2>'
-    document.getElementById('barhead').innerHTML = a
-  }
+  var a = '<h2>Bargraph that show people in ' + roomname + '</h2>'
+  document.getElementById('barhead').innerHTML = a
+}
 function powerName(roomname) {
   var a = '<h2>Energy in ' + roomname + '</h2>'
   document.getElementById('energyhead').innerHTML = a
@@ -109,7 +109,8 @@ const fetchData = () => {
           .name
       )
       peoplebarName(
-        responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1].name
+        responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1]
+          .name
       )
     })
 }

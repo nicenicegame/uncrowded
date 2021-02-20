@@ -1,5 +1,5 @@
 // JavaScript Document
-const connectlink = 'https://exceed11.cpsk-club.xyz/'
+const connectlink = 'https://exceed11.cpsk-club.xyz'
 
 const signinLink = document.querySelector('.signin')
 const signoutLink = document.querySelector('.signout')

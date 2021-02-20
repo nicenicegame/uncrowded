@@ -1,4 +1,4 @@
-const connectlink = 'http://localhost:3000'
+const connectlink = 'https://exceed11.cpsk-club.xyz'
 
 const signinLink = document.querySelector('.signin')
 const signoutLink = document.querySelector('.signout')
@@ -38,9 +38,9 @@ function peopleName(roomname) {
   document.getElementById('Graphhead').innerHTML = a
 }
 function peoplebarName(roomname) {
-    var a = '<h2>Bargraph that show people in ' + roomname + '</h2>'
-    document.getElementById('barhead').innerHTML = a
-  }
+  var a = '<h2>Bargraph that show people in ' + roomname + '</h2>'
+  document.getElementById('barhead').innerHTML = a
+}
 function powerName(roomname) {
   var a = '<h2>Energy in ' + roomname + '</h2>'
   document.getElementById('energyhead').innerHTML = a
@@ -58,10 +58,22 @@ const gotData = () => {
     .then((response) => response.json())
     .then((responseData) => {
       console.log(responseData)
-      peopleName(responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1].name)
-      peoplebarName(responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1].name)
-      powerName(responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1].name)
-      tempName(responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1].name)
+      peopleName(
+        responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1]
+          .name
+      )
+      peoplebarName(
+        responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1]
+          .name
+      )
+      powerName(
+        responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1]
+          .name
+      )
+      tempName(
+        responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1]
+          .name
+      )
       document.getElementById('roomID').innerHTML =
         responseData.building[floor - 1].rooms[
           (roomid % (floor * 100)) - 1
@@ -90,7 +102,7 @@ function onoffStatus(statmeter) {
 }
 
 function sendThemBack(parameter) {
-  console.log(parameter);
+  console.log(parameter)
   /* fetch put back */
   fetch(connectlink, {
     method: 'PUT',
