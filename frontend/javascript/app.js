@@ -150,6 +150,7 @@ fetchData()
   .then(() => {
     updateElement()
     updateContent()
+    floorNumber.innerText = 'Please select the floor to display'
   })
   .catch((err) => {
     console.log(err)
@@ -164,4 +165,4 @@ setInterval(() => {
     .catch((err) => {
       console.log(err)
     })
-}, 15000)
+}, 5000)
