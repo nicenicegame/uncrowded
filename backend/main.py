@@ -4,12 +4,16 @@ from flask_jwt import JWT, jwt_required, current_identity
 from flask_pymongo import PyMongo
 from auth import authenticate, identity
 from bson.objectid import ObjectId
-from datetime import date
 
+import environ
+import os
+
+env = environ.Env()
+env.read_env()
 
 app = Flask(__name__)
-app.config['MONGO_URI'] = 'mongodb://exceed_group11:2grm46fn@158.108.182.0:2255/exceed_group11'
-app.config['SECRET_KEY'] = 'secret'
+app.config['MONGO_URI'] = os.environ.get('URI', default="DATABASE")
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', default='secret')
 CORS(app)
 mongo = PyMongo(app)
 jwt = JWT(app, authenticate, identity)
@@ -37,7 +41,7 @@ def get_hardware():
 @app.route('/hardware', methods=['PUT'])
 def put_hardware():
     data = request.json
-    data_id = ObjectId('602fc8b704a4d40008221a69')
+    data_id = os.environ.get('O_ID', default='ObjectID')
 
     query = building.find()
 
@@ -83,7 +87,7 @@ def get_data():
 @jwt_required()
 def update_data():
     data = request.json
-    data_id = ObjectId('602fc8b704a4d40008221a69')
+    data_id = os.environ.get('O_ID', default='ObjectID')
 
     building.update_one({'_id': data_id}, {
         '$set': {'building': data['building']}
