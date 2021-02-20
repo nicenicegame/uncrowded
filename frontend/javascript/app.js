@@ -34,7 +34,7 @@ const fetchData = () => {
   })
     .then((response) => response.json())
     .then((responseData) => {
-      data = responseData.data
+      data = responseData.building
     })
 }
 

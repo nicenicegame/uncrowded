@@ -1,7 +1,10 @@
-@charset "utf-8";
 @import './graph.css';
 @import './partials/button.css';
 /* CSS Document */
+
+#setup {
+  padding-top: 2rem;
+}
 
 .sColumn {
   float: left;
@@ -9,9 +12,8 @@
   padding: 15px;
 }
 
-
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width:600px) {
+@media screen and (max-width: 600px) {
   .sColumn {
     width: 100%;
   }

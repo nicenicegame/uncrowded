@@ -27,4 +27,4 @@ def authenticate(username, password):
 
 def identity(payload):
     user_id = payload['identity']
-    return user_id.get(user_id, None)
+    return userid_table.get(user_id, None)

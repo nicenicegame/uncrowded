@@ -1,0 +1,181 @@
+const connectlink = 'http://0.0.0.0:3000/'
+
+const signinLink = document.querySelector('.signin')
+const signoutLink = document.querySelector('.signout')
+
+const token = sessionStorage.getItem('access_token')
+if (!token) {
+  window.location.href = './index.html'
+} else {
+  signinLink.parentElement.style.display = 'none'
+}
+
+signoutLink.addEventListener('click', () => {
+  sessionStorage.removeItem('access_token')
+})
+
+function getUrlVars() {
+  var vars = {}
+  var parts = window.location.href.replace(
+    /[?&]+([^=&]+)=([^&]*)/gi,
+    function (m, key, value) {
+      vars[key] = value
+    }
+  )
+  return vars
+}
+
+function getUrlParam(parameter, defaultvalue) {
+  var urlparameter = defaultvalue
+  if (window.location.href.indexOf(parameter) > -1) {
+    urlparameter = getUrlVars()[parameter]
+  }
+  return urlparameter
+}
+
+var roomid = getUrlParam('roomid', 000)
+var floor = getUrlParam('floor', 0)
+
+const gotData = () => {
+  return fetch(connectlink)
+    .then((response) => response.json())
+    .then((responseData) => {
+      document.getElementById('roomID').innerHTML =
+        responseData.building[floor - 1].rooms[
+          (roomid % (floor * 100)) - 1
+        ].room_id
+      document.getElementById('roomName').innerHTML =
+        responseData.building[floor - 1].rooms[
+          (roomid % (floor * 100)) - 1
+        ].name
+      document.getElementById('roomCapacity').innerHTML =
+        responseData.building[floor - 1].rooms[
+          (roomid % (floor * 100)) - 1
+        ].capacity
+      document.getElementById('roomSentry').innerHTML = onoffStatus(
+        responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1]
+          .mode
+      )
+    })
+}
+
+function onoffStatus(statmeter) {
+  if (statmeter == 0) {
+    return 'OFF'
+  } else {
+    return 'ON'
+  }
+}
+
+function sendThemBack(parameter) {
+  /* fetch put back */
+  fetch(connectlink, {
+    method: 'PUT',
+    body: JSON.stringify(parameter),
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: `JWT ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      if (json.error) {
+        window.location.href = './index.html'
+        sessionStorage.removeItem('access_token')
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+function nameChange() {
+  var newname = document.getElementById('newName').value
+  if (newname == '') {
+    alert("Don't make the name blank!!")
+    showSetting()
+  } else {
+    fetch(connectlink)
+      .then((response) => response.json())
+      .then((json) => {
+        json.building[floor - 1].rooms[
+          (roomid % (floor * 100)) - 1
+        ].name = newname
+        sendThemBack(json)
+      })
+    gotData()
+    showSetting()
+  }
+}
+
+function capChange() {
+  var newcap = document.getElementById('newCap').value
+  if (isNaN(newcap) || newcap < 1) {
+    alert('Capacity require Number only!!')
+    showSetting()
+  } else {
+    fetch(connectlink)
+      .then((response) => response.json())
+      .then((json) => {
+        json.building[floor - 1].rooms[
+          (roomid % (floor * 100)) - 1
+        ].capacity = newcap
+        sendThemBack(json)
+      })
+    gotData()
+    showSetting()
+  }
+}
+
+function modeChange() {
+  var newstate = document.getElementById('newMode').value
+
+  fetch(connectlink)
+    .then((response) => response.json())
+    .then((json) => {
+      json.building[floor - 1].rooms[
+        (roomid % (floor * 100)) - 1
+      ].mode = newstate
+      sendThemBack(json)
+    })
+  gotData()
+  showSetting()
+}
+
+function goSetting(inputtype) {
+  if (inputtype == 'name') {
+    document.getElementById('roomName').innerHTML =
+      '<input type="text" id="newName">'
+    document.getElementById('newName')
+    document.getElementById('roomNamebtn').innerHTML =
+      '<button type="button" class="cfbutton" onclick="nameChange()">Submit</button> <button type="button" class="notbutton" onclick="showSetting()">Cancel</button>'
+  } else if (inputtype == 'capa') {
+    document.getElementById('roomCapacity').innerHTML =
+      '<input type="text" id="newCap">'
+    document.getElementById('newCap')
+    document.getElementById('roomCapacitybtn').innerHTML =
+      '<button type="button" class="cfbutton" onclick="capChange()">Submit</button> <button type="button" class="notbutton" onclick="showSetting()">Cancel</button>'
+  } else if (inputtype == 'mode') {
+    document.getElementById('roomSentry').innerHTML =
+      '<select id="newMode"><option value=0>OFF</option><option value=1>ON</option></select>'
+    document.getElementById('roomSentrybtn').innerHTML =
+      '<button type="button" class="cfbutton" onclick="modeChange()">Submit</button> <button type="button" class="notbutton" onclick="showSetting()">Cancel</button>'
+  }
+}
+var nnamee = 'name'
+var cap = 'capa'
+var mod = 'mode'
+
+function showSetting() {
+  gotData()
+  document.getElementById('roomNamebtn').innerHTML =
+    '<button type="button" class="sbutton" onclick="goSetting(nnamee)">Edit</button>'
+
+  document.getElementById('roomCapacitybtn').innerHTML =
+    '<button type="button" class="sbutton" onclick="goSetting(cap)">Edit</button>'
+
+  document.getElementById('roomSentrybtn').innerHTML =
+    '<button type="button" class="sbutton" onclick="goSetting(mod)">Edit</button>'
+}
+
+showSetting()

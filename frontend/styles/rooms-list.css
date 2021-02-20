@@ -1,14 +1,18 @@
-@charset "utf-8";
-/* CSS Document */
 @import './index.css';
 @import './partials/button.css';
+@import './partials/global.css';
+
+.header {
+  padding-top: 2rem;
+}
 
 table {
   border-collapse: collapse;
   width: 100%;
 }
 
-th, td {
+th,
+td {
   padding: 8px;
   text-align: center;
   border-bottom: 1px solid #ddd;

@@ -1,8 +1,14 @@
 const SIGNIN_URL = 'http://0.0.0.0:3000/auth'
 
+const signoutLink = document.querySelector('.signout')
+const editRoomLink = document.querySelector('.edit-room')
+
 const token = sessionStorage.getItem('access_token')
 if (token) {
   window.location.href = './index.html'
+} else {
+  signoutLink.parentElement.style.display = 'none'
+  editRoomLink.parentElement.style.display = 'none'
 }
 
 const handleSignin = ({ username, password }) => {
