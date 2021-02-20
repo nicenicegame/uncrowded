@@ -1,19 +1,5 @@
 const connectlink = 'https://exceed11.cpsk-club.xyz'
 
-const signinLink = document.querySelector('.signin')
-const signoutLink = document.querySelector('.signout')
-
-const token = sessionStorage.getItem('access_token')
-if (!token) {
-  window.location.href = './index.html'
-} else {
-  signinLink.parentElement.style.display = 'none'
-}
-
-signoutLink.addEventListener('click', () => {
-  sessionStorage.removeItem('access_token')
-})
-
 function getUrlVars() {
   var vars = {}
   var parts = window.location.href.replace(
@@ -57,7 +43,6 @@ const gotData = () => {
   return fetch(connectlink)
     .then((response) => response.json())
     .then((responseData) => {
-      console.log(responseData)
       peopleName(
         responseData.building[floor - 1].rooms[(roomid % (floor * 100)) - 1]
           .name
