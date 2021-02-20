@@ -60,6 +60,16 @@ section {
   margin-top: 0.5rem;
 }
 
+.error-message {
+  width: 100%;
+  text-align: center;
+  padding: 1rem 2rem;
+  background: rgb(197, 91, 91);
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  display: none;
+}
+
 @media screen and (max-width: 1200px) {
   .signin-form {
     width: 50%;
