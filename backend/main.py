@@ -1,13 +1,18 @@
 from flask import Flask, request
 from flask_cors import CORS
+from flask_jwt import JWT, jwt_required, current_identity
 from flask_pymongo import PyMongo
+from auth import authenticate, identity
 from bson.objectid import ObjectId
 from datetime import date
 
+
 app = Flask(__name__)
 app.config['MONGO_URI'] = 'mongodb://exceed_group11:2grm46fn@158.108.182.0:2255/exceed_group11'
+app.config['SECRET_KEY'] = 'secret'
 CORS(app)
 mongo = PyMongo(app)
+jwt = JWT(app, authenticate, identity)
 
 building = mongo.db.building
 users = mongo.db.users
@@ -59,6 +64,7 @@ def get_data():
 
 
 @app.route('/', methods=['PUT'])
+@jwt_required()
 def update_data():
     data = request.json
     data_id = ObjectId('602fc8b704a4d40008221a69')
@@ -68,20 +74,6 @@ def update_data():
     })
 
     return {"message": "Update complete"}
-
-
-@app.route('/signin', methods=['POST'])
-def signin():
-    user_data = request.json
-    user = users.find_one({'username': user_data['username']})
-
-    if not user:
-        return {'error': 'Can not find the user.'}
-
-    if user_data['password'] != user['password']:
-        return {'error': 'Password does not match.'}
-
-    return {'message': 'Login successfully'}
 
 
 if __name__ == "__main__":
