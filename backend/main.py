@@ -4,6 +4,7 @@ from flask_jwt import JWT, jwt_required, current_identity
 from flask_pymongo import PyMongo
 from auth import authenticate, identity
 from bson.objectid import ObjectId
+from datetime import timedelta
 
 import environ
 import os
@@ -16,6 +17,7 @@ CORS(app)
 app.config['CORS_HEADERS'] = os.environ.get('CORSHEADER', default="CORS")
 app.config['MONGO_URI'] = os.environ.get('URI', default="DATABASE")
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', default='SECRET')
+app.config['JWT_EXPIRATION_DELTA'] = timedelta(seconds=600)
 
 mongo = PyMongo(app)
 jwt = JWT(app, authenticate, identity)
