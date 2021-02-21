@@ -151,7 +151,7 @@ function capChange() {
       .then((json) => {
         json.building[floor - 1].rooms[
           (roomid % (floor * 100)) - 1
-        ].capacity = newcap
+        ].capacity = parseInt(newcap)
         sendThemBack(json)
       })
     gotData()

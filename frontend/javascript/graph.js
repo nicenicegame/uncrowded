@@ -265,4 +265,4 @@ setInterval(() => {
   fetchData()
   label.push(formatAMPM(new Date()))
   makegraph()
-}, 15000)
+}, 5000)
