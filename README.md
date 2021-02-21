@@ -15,3 +15,8 @@
 * [Kongtapp Veerawattananun](https://github.com/KongtappV) 
 * [Tatpol Samakpong](https://github.com/nicenicegame)
 * [Pitchapa Sae-lim](https://github.com/PitchapaSaelim)
+
+### Getting Started
+Open `/frontend/pages/index.html` via live server extension on visual studio code.
+
+**Warning: open by copy path, javascript and css will not be loaded.**
